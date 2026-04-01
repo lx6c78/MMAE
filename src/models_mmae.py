@@ -1003,11 +1003,17 @@ class MMAE(nn.Module):
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         x_stats_LT = imgs[:, :, 1600:1610]
 
         x_stats = imgs[:, :, 1610:].squeeze(1)
 
 
+=======
+        x_stats = imgs[:, :, 1600:1627].squeeze(1)
+
+        x_stats_LT = imgs[:, :, 1627:]
+>>>>>>> 265cb7a5e28f98eb1238b034ce7dfcf8efcb1bdc
 =======
         x_stats = imgs[:, :, 1600:1627].squeeze(1)
 
