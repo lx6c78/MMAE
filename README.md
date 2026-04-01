@@ -6,19 +6,7 @@
 
 ```bash
 # Create a new conda environment
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 conda create -n MMAE python=3.8.18 -y
-=======
-conda create -n MMAE python=3.8.18
->>>>>>> 265cb7a5e28f98eb1238b034ce7dfcf8efcb1bdc
-=======
-conda create -n MMAE python=3.8.18
->>>>>>> 265cb7a5e28f98eb1238b034ce7dfcf8efcb1bdc
-=======
-conda create -n MMAE python=3.8.18
->>>>>>> 265cb7a5e28f98eb1238b034ce7dfcf8efcb1bdc
 
 # Activate the environment
 conda activate MMAE
