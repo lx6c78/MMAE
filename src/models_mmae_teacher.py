@@ -1001,27 +1001,10 @@ class MMAE(nn.Module):
         assert C == 1, "Input images should be grayscale"
         x_payload = imgs[:, :, :1600]  # Shape: [B, 1, 1600]
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         x_stats_LT = imgs[:, :, 1600:1610]
 
         x_stats = imgs[:, :, 1610:].squeeze(1)
-=======
-        x_stats = imgs[:, :, 1600:1627].squeeze(1)
 
-        x_stats_LT = imgs[:, :, 1627:]
->>>>>>> 265cb7a5e28f98eb1238b034ce7dfcf8efcb1bdc
-=======
-        x_stats = imgs[:, :, 1600:1627].squeeze(1)
-
-        x_stats_LT = imgs[:, :, 1627:]
->>>>>>> 265cb7a5e28f98eb1238b034ce7dfcf8efcb1bdc
-=======
-        x_stats = imgs[:, :, 1600:1627].squeeze(1)
-
-        x_stats_LT = imgs[:, :, 1627:]
->>>>>>> 265cb7a5e28f98eb1238b034ce7dfcf8efcb1bdc
 
         if self.is_pretrain:
             if self.teach_train:
