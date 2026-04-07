@@ -32,15 +32,20 @@ Please download and extract the dataset to your local machine or server before r
 To pre-train the MMAE model, use the following command. Make sure to update the paths to match your local dataset and output directories.
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python src/fine-tune.py \
-    --blr 2e-3 \
-    --epochs 120 \
-    --nb_classes <num-class> \
-    --finetune <your-pretrained-checkpoint-path> \
-    --data_path <your-finetune-data-dir> \
-    --output_dir <your-finetune-output-dir> \
-    --log_dir <your-finetune-log-dir> \
-    --model mmae_classifier \
+CUDA_VISIBLE_DEVICES=0 python src/pretrain.py \
+    --batch_size 128 \
+    --blr 1e-3 \
+    --steps 150000 \
+    --mask_ratio 0.9 \
+    --data_path <your-pretrain-data-dir> \
+    --output_dir <your-pretrain-output-dir> \
+    --log_dir <your-pretrain-log-dir> \
+    --model mmae_pretrain \
+    --model_teacher mmae_teacher \
+    --ema_op per_epoch \
+    --ema_frequent 1 \
+    --momentum_teacher 0.96 \
+    --momentum_teacher_final 0.99 \
     --no_amp
 ```
 
