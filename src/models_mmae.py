@@ -305,7 +305,7 @@ class Block_losspred_decoder(nn.Module):
         return x
 
 
-# todo: class MambaVisionLayer(nn.Module): - > class MMAE_Layer(nn.Module)
+
 class MMAE_Layer(nn.Module):
     def __init__(self,
                  dim,
@@ -350,8 +350,8 @@ class MMAE_Layer(nn.Module):
         return x
 
 
-# todo: class MambaVision(nn.Module): -> class MMAE_Core(nn.Module):
-# todo: self.levels.append(level) 中的level = MambaVisionLayer -> level = MMAE_Layer
+
+
 class MMAE_Core(nn.Module):
     def __init__(self,
                  dim,
@@ -378,7 +378,7 @@ class MMAE_Core(nn.Module):
         self.levels = nn.ModuleList()
         for i in range(len(depths)):
             conv = True if (i == 0 or i == 1) else False
-            # todo: self.levels.append(level) 中的level = MambaVisionLayer -> level = MMAE_Layer
+
             level = MMAE_Layer(dim=dim,
                                      depth=depths[i],
                                      num_heads=num_heads[i],
@@ -447,7 +447,7 @@ class StatEncoder(nn.Module):
         return out
 
 
-# todo: class DualStreamStatRouter(nn.Module): -> class PMP(nn.Module):
+
 class PMP(nn.Module):
     def __init__(self,
                  packet_size=320,
@@ -620,11 +620,7 @@ class PMP(nn.Module):
 
         return bias.unsqueeze(1).expand(-1, self.num_heads, -1, -1)
 
-# todo: class NetMamba(nn.Module): -> class MMAE(nn.Module):
-# todo: class NetMamba(nn.Module): 中的 self.mambavision -> self.mmae_core_block
-# todo: self.mambavision = MambaVision -> self.mmae_core_block = MMAE_Core
-# todo: class NetMamba(nn.Module): 中的 def mix_forward_statrouter_decoder - > def mix_forward_PMP_decoder
-# todo: self.loss_predictor_router = DualStreamStatRouter - > self.loss_predictor_router = PMP
+
 class MMAE(nn.Module):
     def __init__(self, img_size=40, stride_size=4, in_chans=1,
                  dim=256,
@@ -655,7 +651,7 @@ class MMAE(nn.Module):
         num_cls_token = 1
         self.pos_embed = nn.Parameter(torch.zeros(1, self.num_patches + num_cls_token, embed_dim))
         self.drop_path = DropPath(drop_path_rate) if drop_path_rate > 0. else nn.Identity()
-        # todo: class NetMamba(nn.Module): 中的 self.mambavision -> self.mmae_core_block
+
         self.mmae_core_block = MMAE_Core(depths=[1, 2, 2, 2],
                                        num_heads=[8, 8, 8, 8],
                                        window_size=[8, 8, 14, 7],
@@ -691,7 +687,7 @@ class MMAE(nn.Module):
                     for i in range(decoder_depth)])
                 self.decoder_norm_losspred = nn.LayerNorm(decoder_embed_dim)
                 self.decoder_pred_losspred = nn.Linear(decoder_embed_dim, stride_size * in_chans, bias=True)
-                # todo: self.loss_predictor_router = DualStreamStatRouter - > self.loss_predictor_router = PMP
+
                 self.loss_predictor_router = PMP(packet_size=320, num_packets=5, total_length=1600,
                                                                   stride_size=stride_size, num_heads=decoder_num_heads)
 
@@ -907,7 +903,7 @@ class MMAE(nn.Module):
 
         return x, pre_pred_unmix_x_rec
 
-    # todo: def mix_forward_statrouter_decoder - > def mix_forward_PMP_decoder
+
     def mix_forward_PMP_decoder(self, x, mask, ids_restore, sample_inx, teach_train=False, x_stats_LT=None):
 
 
@@ -1046,7 +1042,7 @@ class MMAE(nn.Module):
             x = self.mix_forward_encoder(x_payload, mask_ratio=mask_ratio, x_stats=None, if_mask=False)
             return self.head(x[:, 0, :])
 
-# todo: def net_mamba_pretrain(**kwargs): -> def mmae_pretrain(**kwargs):
+
 def mmae_pretrain(**kwargs):
     model = MMAE(
         img_size=40, stride_size=4, in_chans=1,
@@ -1058,7 +1054,7 @@ def mmae_pretrain(**kwargs):
         **kwargs)
     return model
 
-# todo: def net_mamba_classifier(**kwargs): -> def mmae_classifier(**kwargs):
+
 def mmae_classifier(**kwargs):
     model = MMAE(
         img_size=40, stride_size=4, in_chans=1,
